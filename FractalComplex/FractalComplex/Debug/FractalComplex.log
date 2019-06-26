@@ -1,0 +1,3 @@
+﻿  Gamepad.cpp
+  C:\Users\ilyin\GitHub\FractalComplex\FractalComplex\FractalComplex\Gamepad.cpp(32) : warning C4715: 'Gamepad::get': not all control paths return a value
+  FractalComplex.vcxproj -> C:\Users\ilyin\GitHub\FractalComplex\FractalComplex\Debug\FractalComplex.exe
