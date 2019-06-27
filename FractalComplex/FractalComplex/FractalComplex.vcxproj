@@ -22,6 +22,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Complex.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="DrawSystem.h" />
     <ClInclude Include="Gamepad.h" />
@@ -38,6 +39,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Complex.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Control.events.cpp" />
     <ClCompile Include="DrawSystem.basics.cpp" />

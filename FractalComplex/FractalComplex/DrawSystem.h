@@ -5,6 +5,7 @@
 #include "System.h"
 #include "Camera.h"
 #include "Mouse.h"
+#include "Config.h"
 
 class DrawSystem {
 public:
@@ -17,15 +18,22 @@ public:
 	Mouse mouse;
 	double w, h;
 	double blockSize = 1;
+	double zoom = 2;
+	sf::Image img;
+	int mode = 0;
+
+	Config* config;
 
 	void draw();
 	void drawScene();
 	void drawInterface();
+	void setImage();
 	sf::Font font;
 	
 //private:
 	//basics
 
+	Color fromHSV(double H, double S, double V);
 	void fillRect(double x, double y, double width, double height, Color color);
 	void strokeRect(double x, double y, double width, double height, Color color);
 	void image(std::string name, double x, double y, double width, double height, double angle);

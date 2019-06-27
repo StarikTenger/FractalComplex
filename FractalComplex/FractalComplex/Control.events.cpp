@@ -2,9 +2,12 @@
 #include <iostream>
 
 void Control::events() {
-	
+
 	drawSys.window->setKeyRepeatEnabled(false);
 	mouse.statePrev = mouse.state;
+	//mouse.posPrev = mouse.pos;
+	//keysPrev = keys;
+	mouse.delta = 0;
 	sf::Event event;
 	while (drawSys.window->pollEvent(event))
 	{
@@ -33,17 +36,8 @@ void Control::events() {
 		case sf::Event::MouseButtonReleased:
 			mouse.state = 0;
 			break;
-		case sf::Event::JoystickButtonPressed:
-			joystick.get(event.joystickButton.button) = 1;
-			break;
-		case sf::Event::JoystickButtonReleased:
-			joystick.get(event.joystickButton.button) = 0;
-			break;
-		case sf::Event::JoystickMoved:
-			if(event.joystickMove.axis == 0)
-				joystick.pos.x = event.joystickMove.position;
-			else
-				joystick.pos.y = event.joystickMove.position;
+		case sf::Event::MouseWheelMoved:
+			mouse.delta = event.mouseWheel.delta;
 			break;
 		}
 	}

@@ -21,15 +21,15 @@ Control::Control() {
 			
 		}
 	}
-
+	config = Config("config.conf");
+	drawSys.config = &config;
 	//////////////////////////////////////////
 	Camera& cam = drawSys.cam;
-	cam.pos = { -0.5, 0.6 };
-	cam.scale = drawSys.window->getSize().y / 2 * 10;
-
+	cam.pos = { -0.5, 0 };
+	cam.scale = drawSys.window->getSize().y / 4;
 	drawSys.system = &sys;
-	//drawSys.draw();
-	drawSys.window->display();
+	drawSys.setImage();
+
 }
 
 Control::~Control() {
@@ -83,7 +83,7 @@ void Control::step() {
 			state = 1;
 		}
 		if (mouse.state) {
-			double dS = 2;
+			double dS = drawSys.zoom;
 			cam.border = Vector2d(drawSys.w, drawSys.h);
 			cam.pos += (mouse.pos - cam.border / 2) / cam.scale;
 			drawSys.cam.scale *= dS;
@@ -92,14 +92,12 @@ void Control::step() {
 		}
 		if (state) {
 			drawSys.system = &sys;
-			drawSys.draw();
-			drawSys.window->display();
+			drawSys.setImage();
+			
 		}
-
-
-		
-		
-
-		
+		drawSys.zoom *= pow(1.1, mouse.delta);
+		drawSys.draw();
+		drawSys.window->display();
+			
 	}
 }
