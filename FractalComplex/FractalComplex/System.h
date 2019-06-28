@@ -8,7 +8,7 @@
 
 class System{
 public:
-	std::vector<std::vector<double> > field;
+	std::vector<std::vector<long double> > field;
 	System();
 	~System();
 };

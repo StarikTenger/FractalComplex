@@ -1,11 +1,11 @@
 #pragma once
 class Complex {
 public:
-	double a;
-	double b;
+	long double a;
+	long double b;
 
 	Complex();
-	Complex(double _a, double _b);
+	Complex(long double _a, long double _b);
 	~Complex();
 };
 

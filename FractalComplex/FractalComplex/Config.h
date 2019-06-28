@@ -5,17 +5,22 @@ class Config {
 public:
 	int iterations = 1000;
 
-	double periodH = 245;
-	double frequencyH = 5;
-	double amplitudeH = 1;
+	long double periodH = 245;
+	long double frequencyH = 5;
+	long double amplitudeH = 1;
 
-	double periodS = 0.5;
-	double frequencyS = 0;
-	double amplitudeS = 1;
+	long double periodS = 0.5;
+	long double frequencyS = 0;
+	long double amplitudeS = 1;
+	long double constantS = 0;
 
-	double periodV = 0.5;
-	double frequencyV = 0;
-	double amplitudeV = 1;
+	long double periodV = 0.5;
+	long double frequencyV = 0;
+	long double amplitudeV = 1;
+	long double constantV = 0;
+
+	long double photoQuality = 1;
+	int photoIterations = iterations;
 
 	Config();
 	Config(std::string path);

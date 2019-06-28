@@ -4,7 +4,7 @@ Complex::Complex() {
 	a = b = 0;
 }
 
-Complex::Complex(double _a, double _b) {
+Complex::Complex(long double _a, long double _b) {
 	a = _a;
 	b = _b;
 }

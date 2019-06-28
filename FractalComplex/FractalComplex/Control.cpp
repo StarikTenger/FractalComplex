@@ -59,7 +59,7 @@ void Control::step() {
 		events();
 		drawSys.mouse = mouse;
 		Camera& cam = drawSys.cam;
-		double camVel = 100/cam.scale;
+		long double camVel = 100/cam.scale;
 		int state = 0;
 
 		if (keys[SPACE]) {
@@ -82,8 +82,16 @@ void Control::step() {
 			cam.pos.y += camVel;
 			state = 1;
 		}
+		if (keys[P]) {
+			std::cout << "P";
+			double k = config.photoQuality;
+			cam.scale *= k;
+			sf::Image img = drawSys.makeImage(Vector2d(drawSys.w*k, drawSys.h*k), config.photoIterations);
+			cam.scale /= k;
+			img.saveToFile("result.png");
+		}
 		if (mouse.state) {
-			double dS = drawSys.zoom;
+			long double dS = drawSys.zoom;
 			cam.border = Vector2d(drawSys.w, drawSys.h);
 			cam.pos += (mouse.pos - cam.border / 2) / cam.scale;
 			drawSys.cam.scale *= dS;

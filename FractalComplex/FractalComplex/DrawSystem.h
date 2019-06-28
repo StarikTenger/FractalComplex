@@ -16,9 +16,9 @@ public:
 	DrawSystem();
 	~DrawSystem();
 	Mouse mouse;
-	double w, h;
-	double blockSize = 1;
-	double zoom = 2;
+	long double w, h;
+	long double blockSize = 1;
+	long double zoom = 2;
 	sf::Image img;
 	int mode = 0;
 
@@ -28,18 +28,19 @@ public:
 	void drawScene();
 	void drawInterface();
 	void setImage();
+	sf::Image makeImage(Vector2d box, int iterations);
 	sf::Font font;
 	
 //private:
 	//basics
 
-	Color fromHSV(double H, double S, double V);
-	void fillRect(double x, double y, double width, double height, Color color);
-	void strokeRect(double x, double y, double width, double height, Color color);
-	void image(std::string name, double x, double y, double width, double height, double angle);
-	void image(std::string name, double x, double y, double width, double height, double angle, Color color);
-	void image(std::string name, double x, double y, double width, double height, double angle, double d);
-	void text(std::string text, double x, double y, int size, Color color);
+	Color fromHSV(long double H, long double S, long double V);
+	void fillRect(long double x, long double y, long double width, long double height, Color color);
+	void strokeRect(long double x, long double y, long double width, long double height, Color color);
+	void image(std::string name, long double x, long double y, long double width, long double height, long double angle);
+	void image(std::string name, long double x, long double y, long double width, long double height, long double angle, Color color);
+	void image(std::string name, long double x, long double y, long double width, long double height, long double angle, long double d);
+	void text(std::string text, long double x, long double y, int size, Color color);
 	//objects
 	
 	//load

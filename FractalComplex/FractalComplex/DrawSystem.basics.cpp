@@ -4,11 +4,11 @@
 
 #include <iostream>
 
-Color DrawSystem::fromHSV(double H, double S, double V) {
-	double C = S * V;
-	double X = C * (1 - abs(fmod(H / 60.0, 2) - 1));
-	double m = V - C;
-	double Rs, Gs, Bs;
+Color DrawSystem::fromHSV(long double H, long double S, long double V) {
+	long double C = S * V;
+	long double X = C * (1 - abs(fmod(H / 60.0, 2) - 1));
+	long double m = V - C;
+	long double Rs, Gs, Bs;
 
 	if (H >= 0 && H < 60) {
 		Rs = C;
@@ -48,7 +48,7 @@ Color DrawSystem::fromHSV(double H, double S, double V) {
 	return color;
 }
 
-void DrawSystem::fillRect(double x, double y, double width, double height, Color color) {
+void DrawSystem::fillRect(long double x, long double y, long double width, long double height, Color color) {
 	sf::RectangleShape rectangle;
 	rectangle.setOrigin(width / 2, height / 2);
 	rectangle.setSize(sf::Vector2f(width, height));
@@ -57,7 +57,7 @@ void DrawSystem::fillRect(double x, double y, double width, double height, Color
 	window->draw(rectangle);
 }
 
-void DrawSystem::strokeRect(double x, double y, double width, double height, Color color) {
+void DrawSystem::strokeRect(long double x, long double y, long double width, long double height, Color color) {
 	sf::RectangleShape rectangle;
 	rectangle.setOrigin(width / 2, height / 2);
 	rectangle.setSize(sf::Vector2f(width, height));
@@ -68,7 +68,7 @@ void DrawSystem::strokeRect(double x, double y, double width, double height, Col
 	window->draw(rectangle);
 }
 
-void DrawSystem::image(std::string name, double x, double y, double width, double height, double angle, Color color) {
+void DrawSystem::image(std::string name, long double x, long double y, long double width, long double height, long double angle, Color color) {
 	sf::Texture& tex = *textures[name];
 	Vector2d scale = { width / tex.getSize().x  , height / tex.getSize().y };
 	Vector2d pos = { x, y };// cam.transform({ x, y });
@@ -83,11 +83,11 @@ void DrawSystem::image(std::string name, double x, double y, double width, doubl
 	window->draw(sprite);
 }
 
-void DrawSystem::image(std::string name, double x, double y, double width, double height, double angle) {
+void DrawSystem::image(std::string name, long double x, long double y, long double width, long double height, long double angle) {
 	image(name, x, y, width, height, angle, Color(255, 255, 255, 255));
 }
 
-void DrawSystem::image(std::string name, double x, double y, double width, double height, double angle, double d) {
+void DrawSystem::image(std::string name, long double x, long double y, long double width, long double height, long double angle, long double d) {
 	Vector2d pos(x, y);
 	pos = cam.pos + (pos - cam.pos)*d;
 	image(name, pos.x, pos.y, width*d, height*d, angle);
@@ -95,7 +95,7 @@ void DrawSystem::image(std::string name, double x, double y, double width, doubl
 
 
 
-void DrawSystem::text(std::string text, double x, double y, int size, Color color) {
+void DrawSystem::text(std::string text, long double x, long double y, int size, Color color) {
 	sf::Text drawnText;
 	drawnText.setFont(font);
 	drawnText.setString(text);

@@ -37,6 +37,9 @@ Config::Config(std::string path) {
 		if (param == "S_AMPLITUDE") {
 			file >> amplitudeS;
 		}
+		if (param == "S_CONSTANT") {
+			file >> constantS;
+		}
 		//////////////
 		if (param == "V_PERIOD") {
 			file >> periodV;
@@ -46,6 +49,16 @@ Config::Config(std::string path) {
 		}
 		if (param == "V_AMPLITUDE") {
 			file >> amplitudeV;
+		}
+		if (param == "V_CONSTANT") {
+			file >> constantV;
+		}
+		//////////////
+		if (param == "PHOTO_QUALITY") {
+			file >> photoQuality;
+		}
+		if (param == "PHOTO_ITERATIONS") {
+			file >> photoIterations;
 		}
 	}
 }

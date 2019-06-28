@@ -2,7 +2,7 @@
 
 Camera::Camera(){
 }
-Camera::Camera(Vector2d _pos, Vector2d _border, double _scale) {
+Camera::Camera(Vector2d _pos, Vector2d _border, long double _scale) {
 	pos = _pos;
 	border = _border;
 	scale = _scale;
