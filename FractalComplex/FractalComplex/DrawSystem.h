@@ -27,8 +27,8 @@ public:
 	void draw();
 	void drawScene();
 	void drawInterface();
-	void setImage();
-	sf::Image makeImage(Vector2d box, int iterations);
+	void setImage(bool display);
+	sf::Image makeImage(Vector2d box, int iterations, bool display);
 	sf::Font font;
 	
 //private:

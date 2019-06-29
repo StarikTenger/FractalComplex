@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 
 #include <iostream>
+#include "random.h"
 
 
 
@@ -37,7 +38,7 @@ void DrawSystem::drawInterface() {
 	strokeRect(mouse.pos.x+1, mouse.pos.y+1, w/zoom, h/zoom, Color(0,0,0));
 }
 
-sf::Image DrawSystem::makeImage(Vector2d box, int iterations) {
+sf::Image DrawSystem::makeImage(Vector2d box, int iterations, bool display) {
 	std::vector<std::vector<long double> > values;
 	for (int a = -box.x / 2; a < box.x / 2; a++) {
 		values.push_back({});
@@ -58,6 +59,14 @@ sf::Image DrawSystem::makeImage(Vector2d box, int iterations) {
 				}
 
 			}
+		}
+		if (display && random::intRandom(0, box.x)<30) {
+			drawScene();
+			fillRect(w/2, h/2, 100, 70, Color(255, 255, 255));
+			double r = ((a + box.x / 2) / box.x * 100);
+			fillRect(w/2-50+r/2, h/2, r, 70, Color(180, 180, 180));
+			text(std::to_string(int(r)) + "%", w/2, h/2, 50, Color(0, 0, 0));
+			window->display();
 		}
 	}
 
@@ -95,12 +104,12 @@ sf::Image DrawSystem::makeImage(Vector2d box, int iterations) {
 	return image;
 }
 
-void DrawSystem::setImage() {
+void DrawSystem::setImage(bool display) {
 	std::cout << "fuck\n";
 	System& sys = *system;
 	w = window->getSize().x;
 	h = window->getSize().y;
-	img = makeImage(Vector2d(w, h), config->iterations);
+	img = makeImage(Vector2d(w, h), config->iterations, display);
 
 	
 }

@@ -28,7 +28,7 @@ Control::Control() {
 	cam.pos = { -0.5, 0 };
 	cam.scale = drawSys.window->getSize().y / 4;
 	drawSys.system = &sys;
-	drawSys.setImage();
+	drawSys.setImage(0);
 
 }
 
@@ -86,7 +86,7 @@ void Control::step() {
 			std::cout << "P";
 			double k = config.photoQuality;
 			cam.scale *= k;
-			sf::Image img = drawSys.makeImage(Vector2d(drawSys.w*k, drawSys.h*k), config.photoIterations);
+			sf::Image img = drawSys.makeImage(Vector2d(drawSys.w*k, drawSys.h*k), config.photoIterations, 1);
 			cam.scale /= k;
 			img.saveToFile("result.png");
 		}
@@ -100,7 +100,7 @@ void Control::step() {
 		}
 		if (state) {
 			drawSys.system = &sys;
-			drawSys.setImage();
+			drawSys.setImage(1);
 			
 		}
 		drawSys.zoom *= pow(1.1, mouse.delta);
