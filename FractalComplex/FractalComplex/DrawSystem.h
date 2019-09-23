@@ -6,12 +6,15 @@
 #include "Camera.h"
 #include "Mouse.h"
 #include "Config.h"
+#include "Cell.h"
+#include "Frame.h"
 
 class DrawSystem {
 public:
 	sf::RenderWindow* window;
 	Camera cam;
 	System* system;
+	std::vector<Frame> frames;
 	bool fullscreenMode = 0;
 	DrawSystem();
 	~DrawSystem();
@@ -19,7 +22,11 @@ public:
 	long double w, h;
 	long double blockSize = 1;
 	long double zoom = 2;
+	long double valueConst = 0;
+	long double valueK = 1;
+	long double colorConst = 0;
 	sf::Image img;
+	std::vector<std::vector<Cell> > values;
 	int mode = 0;
 
 	Config* config;
@@ -27,7 +34,9 @@ public:
 	void draw();
 	void drawScene();
 	void drawInterface();
-	void setImage(bool display);
+	void setImage(bool display, bool createNew);
+
+	void createFractal(Vector2d box, int iterations, bool display);
 	sf::Image makeImage(Vector2d box, int iterations, bool display);
 	sf::Font font;
 	
@@ -41,6 +50,7 @@ public:
 	void image(std::string name, long double x, long double y, long double width, long double height, long double angle, Color color);
 	void image(std::string name, long double x, long double y, long double width, long double height, long double angle, long double d);
 	void text(std::string text, long double x, long double y, int size, Color color);
+	void image(sf::Image);
 	//objects
 	
 	//load

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "random.h"
 
 Control::Control() {
 	for (int i = 0; i < 100; i++) {
@@ -28,7 +29,12 @@ Control::Control() {
 	cam.pos = { -0.5, 0 };
 	cam.scale = drawSys.window->getSize().y / 4;
 	drawSys.system = &sys;
-	drawSys.setImage(0);
+	drawSys.setImage(0, 1);
+	Frame frame;
+	frame.image = drawSys.img;
+	frame.pos = drawSys.cam.pos;
+	frame.scale = drawSys.cam.scale;
+	drawSys.frames.push_back(frame);
 
 }
 
@@ -49,6 +55,15 @@ void Control::saveConfig() {
 	
 }
 
+std::string Control::randomName(int n) {
+	std::string symbols = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+	std::string name = "";
+	for (int i = 0; i < n; i++) {
+		name += symbols[random::intRandom(0, symbols.size() - 1)];
+	}
+	return name;
+}
+
 void Control::step() {
 	//dt = 0.05;
 	int timeMs = getMilliCount();
@@ -62,45 +77,79 @@ void Control::step() {
 		long double camVel = 100/cam.scale;
 		int state = 0;
 
-		if (keys[SPACE]) {
-			cam.scale *= 2;
-			state = 1;
-		}
 		if (keys[LEFT]) {
-			cam.pos.x -= camVel;
-			state = 1;
+			drawSys.valueConst += 0.002;
+			drawSys.setImage(1, 0);
 		}
 		if (keys[RIGHT]) {
-			cam.pos.x += camVel;
-			state = 1;
+			drawSys.valueConst -= 0.002;
+			drawSys.setImage(1, 0);
 		}
 		if (keys[UP]) {
-			cam.pos.y -= camVel;
-			state = 1;
+			drawSys.valueK *= 1.02;
+			drawSys.setImage(1, 0);
 		}
 		if (keys[DOWN]) {
-			cam.pos.y += camVel;
-			state = 1;
+			drawSys.valueK /= 1.02;
+			drawSys.setImage(1, 0);
+		}
+		if (keys[C]) {
+			drawSys.colorConst += 10;
+			drawSys.setImage(1, 0);
 		}
 		if (keys[P]) {
-			std::cout << "P";
+			Frame frame;
+			frame.image = drawSys.img;
+			frame.pos = drawSys.cam.pos;
+			frame.scale = drawSys.cam.scale;
+			frame.values = drawSys.values;
+			drawSys.frames.push_back(frame);
+			//
 			double k = config.photoQuality;
 			cam.scale *= k;
+			drawSys.createFractal(Vector2d(drawSys.w * k, drawSys.h * k), config.photoIterations, 1);
 			sf::Image img = drawSys.makeImage(Vector2d(drawSys.w*k, drawSys.h*k), config.photoIterations, 1);
 			cam.scale /= k;
-			img.saveToFile("result.png");
+			img.saveToFile("pictures/" + randomName(8) + ".png");
+			//
+			drawSys.cam.pos = drawSys.frames.back().pos;
+			drawSys.cam.scale = drawSys.frames.back().scale;
+			drawSys.img = drawSys.frames.back().image;
+			drawSys.draw();
+			drawSys.values = drawSys.frames.back().values;
+
+			drawSys.frames.pop_back();
 		}
 		if (mouse.state) {
+			//saving frame
+			Frame frame;
+			frame.image = drawSys.img;
+			frame.pos = drawSys.cam.pos;
+			frame.scale = drawSys.cam.scale;
+			frame.values = drawSys.values;
+			drawSys.frames.push_back(frame);
+			//configuring fractal
 			long double dS = drawSys.zoom;
 			cam.border = Vector2d(drawSys.w, drawSys.h);
 			cam.pos += (mouse.pos - cam.border / 2) / cam.scale;
 			drawSys.cam.scale *= dS;
-			//drawSys.cam.pos += (drawSys.cam.border / 2 - mouse.pos) / drawSys.cam.scale * (1 - dS); //it works
 			state = 1;
 		}
+		if (keys[ESCAPE] && !keysPrev[ESCAPE]) {
+			if (drawSys.frames.size() > 0) {
+				drawSys.cam.pos = drawSys.frames.back().pos;
+				drawSys.cam.scale = drawSys.frames.back().scale;
+				drawSys.img = drawSys.frames.back().image;
+				drawSys.draw();
+				drawSys.values = drawSys.frames.back().values;
+				
+				drawSys.frames.pop_back();
+			}
+		}
+		
 		if (state) {
 			drawSys.system = &sys;
-			drawSys.setImage(1);
+			drawSys.setImage(1, 1);
 			
 		}
 		drawSys.zoom *= pow(1.1, mouse.delta);

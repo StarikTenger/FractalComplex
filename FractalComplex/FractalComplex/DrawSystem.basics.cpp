@@ -9,7 +9,6 @@ Color DrawSystem::fromHSV(long double H, long double S, long double V) {
 	long double X = C * (1 - abs(fmod(H / 60.0, 2) - 1));
 	long double m = V - C;
 	long double Rs, Gs, Bs;
-
 	if (H >= 0 && H < 60) {
 		Rs = C;
 		Gs = X;

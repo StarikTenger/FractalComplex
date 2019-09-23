@@ -44,6 +44,9 @@ Vector2d geom::direction(Vector2d a, Vector2d b) {
 	return (a - b) / distance(a, b);
 }
 long double geom::angle(Vector2d p) {
+	if (p.y < 0) {
+		return M_PI+angle(Vector2d(-p.x, -p.y));
+	}
 	if (abs(p.x) < EPS && abs(p.y) < EPS) {
 		return 0;
 	}
